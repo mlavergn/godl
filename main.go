@@ -10,14 +10,16 @@ import (
 	"strconv"
 )
 
-// VERSION export
-var VERSION = "1.0.0"
+// Version export
+var Version = "1.0.1"
 
 func downloadHandler(resp http.ResponseWriter, req *http.Request) {
 	defer req.Body.Close()
 
 	_, fileName := filepath.Split(req.URL.Path)
 	fmt.Println("Downloading [", fileName, "]")
+
+	resp.Header().Set("Connection", "close")
 
 	if len(fileName) == 0 {
 		fmt.Println("Invalid file [", fileName, "]")
@@ -46,7 +48,7 @@ func downloadHandler(resp http.ResponseWriter, req *http.Request) {
 
 func main() {
 	port := "82"
-	fmt.Println("Starting GoDL v", VERSION, " on port", port)
+	fmt.Println("Starting GoDL v", Version, " on port", port)
 	http.HandleFunc("/", downloadHandler)
 	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
