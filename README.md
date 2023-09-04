@@ -5,3 +5,15 @@
 
 Go project implementing a very low-overhead and fast HTTP file server.
 
+NOTE: This project is now "standard" functionality in Go and can be recreated as:
+
+```go
+package main
+
+import "net/http"
+
+func main() {
+	http.Handle("/", http.FileServer(http.Dir("files")))
+}
+```
+
